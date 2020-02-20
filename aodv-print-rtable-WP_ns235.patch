@@ -1,0 +1,45 @@
+diff -Naur ns-2.35-orig/aodv/aodv.cc ns-2.35/aodv/aodv.cc
+--- ns-2.35-orig/aodv/aodv.cc	2010-04-30 19:10:36.000000000 +0200
++++ ns-2.35/aodv/aodv.cc	2018-06-07 11:15:04.047777111 +0200
+@@ -402,7 +402,7 @@
+ void
+ AODV::rt_update(aodv_rt_entry *rt, u_int32_t seqnum, u_int16_t metric,
+ 	       	nsaddr_t nexthop, double expire_time) {
+-
++     rtable.rt_display(index);
+      rt->rt_seqno = seqnum;
+      rt->rt_hops = metric;
+      rt->rt_flags = RTF_UP;
+diff -Naur ns-2.35-orig/aodv/aodv_rtable.cc ns-2.35/aodv/aodv_rtable.cc
+--- ns-2.35-orig/aodv/aodv_rtable.cc	2006-02-21 16:20:17.000000000 +0100
++++ ns-2.35/aodv/aodv_rtable.cc	2018-06-07 10:20:17.790353327 +0200
+@@ -210,3 +210,17 @@
+  LIST_INSERT_HEAD(&rthead, rt, rt_link);
+  return rt;
+ }
++
++void
++aodv_rtable::rt_display(nsaddr_t id)
++{
++FILE *dumpFile;
++dumpFile = fopen("rtable.txt", "a+");
++aodv_rt_entry *rt = rthead.lh_first;
++for(; rt; rt = rt->rt_link.le_next) {
++// You can add more route table entries if you want to. See aodv_rtable.h for more entries.
++fprintf(dumpFile, "NODE: %d \t %f \t %d \t %d \t %d \t %d \t %.4f \t %d \n", id, CURRENT_TIME,
++rt->rt_dst, rt->rt_nexthop, rt->rt_hops, rt->rt_seqno, rt->rt_expire, rt->rt_flags);
++}
++fclose(dumpFile);
++}
+diff -Naur ns-2.35-orig/aodv/aodv_rtable.h ns-2.35/aodv/aodv_rtable.h
+--- ns-2.35-orig/aodv/aodv_rtable.h	2005-08-02 21:48:51.000000000 +0200
++++ ns-2.35/aodv/aodv_rtable.h	2018-06-07 11:22:47.833073699 +0200
+@@ -153,7 +153,7 @@
+         aodv_rt_entry*       rt_add(nsaddr_t id);
+         void                 rt_delete(nsaddr_t id);
+         aodv_rt_entry*       rt_lookup(nsaddr_t id);
+-
++	void rt_display(nsaddr_t id);
+  private:
+         LIST_HEAD(aodv_rthead, aodv_rt_entry) rthead;
+ };

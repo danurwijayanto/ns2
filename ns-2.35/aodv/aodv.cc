@@ -403,6 +403,7 @@ void
 AODV::rt_update(aodv_rt_entry *rt, u_int32_t seqnum, u_int16_t metric,
 	       	nsaddr_t nexthop, double expire_time) {
 
+rt_print(index);
      rt->rt_seqno = seqnum;
      rt->rt_hops = metric;
      rt->rt_flags = RTF_UP;
@@ -435,7 +436,7 @@ FILE *fp;
 fp = fopen("route_table.txt", "a");
 aodv_rt_entry *rt;
 for (rt=rtable.head();rt; rt = rt->rt_link.le_next) {
-fprintf(fp, "NODE: %i %f %i %i %i %i %i %f %d \n", nodeid, CURRENT_TIME, rt->rt_dst, rt->rt_nexthop, rt->rt_hops, rt->rt_seqno, rt->rt_expire, rt->rt_flags);
+fprintf(fp, "NODE: %d \t %f \t %d \t %d \t %d \t %d \t %.4f \t %d \n", nodeid, CURRENT_TIME, rt->rt_dst, rt->rt_nexthop, rt->rt_hops, rt->rt_seqno, rt->rt_expire, rt->rt_flags);
 }
 fclose(fp);
 }
@@ -887,7 +888,7 @@ double delay = 0.0;
 if (ih->daddr() == index) { // If I am the original source
   // Update the route discovery latency statistics
   // rp->rp_timestamp is the time of request origination
-		rt_print(index);
+		//rt_print(index);
     rt->rt_disc_latency[(unsigned char)rt->hist_indx] = (CURRENT_TIME - rp->rp_timestamp)
                                          / (double) rp->rp_hop_count;
     // increment indx for next time
