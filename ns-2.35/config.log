@@ -788,7 +788,7 @@ configure:7962: $? = 0
 configure:7962: result: yes
 configure:7962: checking for fesetprecision
 configure:7962: gcc-5 -o conftest -g -O2   conftest.c -lm  >&5
-/tmp/ccpMe9i2.o: In function `main':
+/tmp/ccfyo60c.o: In function `main':
 /home/ubuntu/manet/Installer/ns-allinone-2.35/ns-2.35/conftest.c:83: undefined reference to `fesetprecision'
 collect2: error: ld returned 1 exit status
 configure:7962: $? = 1
@@ -1890,7 +1890,7 @@ configure:8900: $? = 0
 configure:8904: result: found
 configure:8918: checking for addr2ascii
 configure:8918: gcc-5 -o conftest -g -O2   -Wl,-export-dynamic conftest.c -lm  >&5
-/tmp/ccaFau1T.o: In function `main':
+/tmp/ccQ5Dfp8.o: In function `main':
 /home/ubuntu/manet/Installer/ns-allinone-2.35/ns-2.35/conftest.c:94: undefined reference to `addr2ascii'
 collect2: error: ld returned 1 exit status
 configure:8918: $? = 1

@@ -403,7 +403,7 @@ void
 AODV::rt_update(aodv_rt_entry *rt, u_int32_t seqnum, u_int16_t metric,
 	       	nsaddr_t nexthop, double expire_time) {
 
-rt_print(index);
+// rt_print(index);
      rt->rt_seqno = seqnum;
      rt->rt_hops = metric;
      rt->rt_flags = RTF_UP;
@@ -734,7 +734,7 @@ rt_update(rt0, rq->rq_src_seqno, rq->rq_hop_count, ih->saddr(),
        rt0->rt_req_last_ttl = rq->rq_hop_count;
        rt0->rt_expire = CURRENT_TIME + ACTIVE_ROUTE_TIMEOUT;
      }
-
+  rt_print(index);
      /* Find out whether any buffered packet can benefit from the 
       * reverse route.
       * May need some change in the following code - Mahesh 09/11/99
@@ -884,11 +884,12 @@ double delay = 0.0;
   rt->rt_req_cnt = 0;
   rt->rt_req_timeout = 0.0; 
   rt->rt_req_last_ttl = rp->rp_hop_count;
-  
+    rt_print(index);
 if (ih->daddr() == index) { // If I am the original source
   // Update the route discovery latency statistics
   // rp->rp_timestamp is the time of request origination
 		//rt_print(index);
+
     rt->rt_disc_latency[(unsigned char)rt->hist_indx] = (CURRENT_TIME - rp->rp_timestamp)
                                          / (double) rp->rp_hop_count;
     // increment indx for next time
